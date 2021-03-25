@@ -1,0 +1,6 @@
+{
+  "token": "ODIwNzQxODg0MTQxMjQwMzIy.YE5lcQ.RoJP4L53CytMsYoIcyuWn_HqJBc",
+  "prefix": ["."],
+  "mongoUrl": "mongodb+srv://theark:VeMTCeKlZGHrlB4V@cluster0.3hs7l.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  "owners": ["350976460313329665"]
+}
