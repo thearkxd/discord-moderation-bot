@@ -3,6 +3,7 @@ const { MessageEmbed } = require("discord.js");
 const moment = require("moment");
 const jailLimit = new Map();
 moment.locale("tr");
+const ms = require("ms");
 
 module.exports = {
   conf: {
