@@ -6,9 +6,9 @@ moment.locale("tr");
 
 module.exports = {
   conf: {
-    aliases: ["karantina"],
-    name: "jail",
-    help: "jail [kullanıcı] [süre] [sebep]",
+    aliases: ["tjail"],
+    name: "tempjail",
+    help: "tempjail [kullanıcı] [süre] [sebep]",
   },
 
   /**
