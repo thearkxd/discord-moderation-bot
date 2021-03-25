@@ -25,7 +25,7 @@ module.exports = {
     if (conf.penals.jail.roles.some(x => member.roles.cache.has(x))) return message.channel.error(message, "Bu üye zaten jailde!");
     const duration = args[1] ? ms(args[1]) : undefined;
     if (!duration) return message.channel.error(message, `Geçerli bir süre belirtmelisin!`);
-    const reason = args.slice(1).join(" ") || "Belirtilmedi!";
+    const reason = args.slice(2).join(" ") || "Belirtilmedi!";
     if (!message.member.hasPermission(8) && member.roles.highest.position >= message.member.roles.highest.position) return message.channel.error(embed.setDescription("Kendinle aynı yetkide ya da daha yetkili olan birini jailleyemezsin!"));
     if (!member.manageable) return message.channel.error(message, "Bu üyeyi jailleyemiyorum!");
     if (conf.penals.jail.limit > 0 && jailLimit.has(message.author.id) && jailLimit.get(message.author.id) == conf.penals.jail.limit) return message.channel.error(message, "Saatlik jail sınırına ulaştın!");
