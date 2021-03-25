@@ -6,7 +6,8 @@ const { MessageEmbed } = require("discord.js");
 module.exports = async (oldMessage, newMessage) => {
   if (oldMessage.author.bot) return;
 
-  const channel = message.guild.channels.cache.get(conf.logs.messageLog);
+  const channel = newMessage.guild.channels.cache.get(conf.logs.messageLog);
+  if (!channel) return;
   const embed = new MessageEmbed()
     .setAuthor(newMessage.member.displayName, newMessage.author.avatarURL({ dynamic: true }))
     .setColor("BLUE")
