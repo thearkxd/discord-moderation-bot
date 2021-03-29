@@ -8,6 +8,7 @@ module.exports = async (oldState, newState) => {
     if (newState.serverMute) newState.setMute(false);
     await newState.member.roles.remove(conf.penals.voiceMute.roles);
     finishedPenal.active = false;
+    finishedPenal.removed = true;
     await finishedPenal.save();
   }
 
