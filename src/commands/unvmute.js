@@ -30,6 +30,7 @@ module.exports = {
     const data = await penals.findOne({ userID: member.user.id, guildID: message.guild.id, type: "VOICE-MUTE" });
     if (data && data.active) {
       data.active = false;
+      data.removed = true;
       await data.save();
     }
     message.channel.send(embed.setDescription(`${member.toString()} üyesinin **sesli kanallarda** susturması, ${message.author} tarafından kaldırıldı!`));
