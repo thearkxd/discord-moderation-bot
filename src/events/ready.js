@@ -12,27 +12,27 @@ module.exports = async () => {
       const member = guild.members.cache.get(x.userID);
       if (!member) return;
       if (x.type === "CHAT-MUTE") {
+        x.active = false;
+        await x.save();
         await member.roles.remove(conf.penals.chatMute.roles);
         client.channels.cache.get(conf.penals.chatMute.log).send(new MessageEmbed().setColor("GREEN").setDescription(`${member.toString()} üyesinin susturulması, süresi bittiği için kaldırıldı!`));
-        x.active = false;
-        x.save();
       }
       if (x.type === "TEMP-JAIL") {
+        x.active = false;
+        await x.save();
         await member.setRoles(conf.registration.unregRoles);
         client.channels.cache.get(conf.penals.jail.log).send(new MessageEmbed().setColor("GREEN").setDescription(`${member.toString()} üyesinin jaili, süresi bittiği için kaldırıldı!`));
-        x.active = false;
-        x.save();
       } 
       if (x.type === "VOICE-MUTE") {
         if (member.voice.channelID) {
-          if (member.voice.serverMute) member.voice.setMute(false);
           x.removed = true;
           await x.save();
+          if (member.voice.serverMute) member.voice.setMute(false);
         }
+        x.active = false;
+        await x.save();
         member.roles.remove(conf.penals.voiceMute.roles);
         client.channels.cache.get(conf.penals.voiceMute.log).send(new MessageEmbed().setColor("GREEN").setDescription(`${member.toString()} üyesinin **sesli kanallarda** susuturulması, süresi bittiği için kaldırıldı!`));
-        x.active = false;
-        x.save();
       }
     });
 

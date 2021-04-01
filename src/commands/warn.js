@@ -29,7 +29,8 @@ module.exports = {
     const data = await penals.find({ guildID: message.guild.id, userID: member.user.id, type: "WARN" });
     if (data.length > 0 && conf.penals.warn.roles.some(x => data.length == x.warnCount)) member.roles.add(conf.penals.warn.roles.find(x => data.length == x.warnCount).role);
     message.channel.send(embed.setDescription(`${member.toString()} üyesi, ${message.author} tarafından, \`${reason}\` nedeniyle susturuldu! \`(Ceza ID: #${penal.id})\``));
-
+    if (conf.dmMessages) member.send(`**${message.guild.name}** sunucusunda, **${message.author.tag}** tarafından, **${reason}** sebebiyle uyarıldınız!`).catch(() => {});
+    
     const log = new MessageEmbed()
       .setAuthor(member.user.username, member.user.avatarURL({ dynamic: true, size: 2048 }))
       .setColor("RED")

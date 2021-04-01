@@ -1,5 +1,6 @@
 {
   "guildID": "",
+  "dmMessages": true,
   "penals": {
     "ban": {
       "staffs": [],
@@ -27,18 +28,18 @@
     "warn": {
       "staffs": [],
       "roles": [{ "warnCount": 1, "role": "" }],
-      "log": []
+      "log": ""
     }
   },
   "registration": {
     "unregRoles": []
   },
-  "logs": {
-    "voiceLog": "",
-    "messageLog": ""
-  },
   "emojis": {
     "mark": "",
     "cross": ""
+  },
+  "logs": {
+    "voiceLog": "",
+    "messageLog": ""
   }
 }

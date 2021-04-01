@@ -24,13 +24,14 @@ module.exports = {
     if (!ban) return message.channel.error(message, "Bu üye banlı değil!");
     
     message.guild.members.unban(args[0], `${message.author.username} tarafından kaldırıldı!`).catch(() => {});
-    const data = await penals.findOne({ userID: ban.user.id, guildID: message.guild.id, type: "BAN" });
-    if (data && data.active) {
+    const data = await penals.findOne({ userID: ban.user.id, guildID: message.guild.id, type: "BAN", active: true });
+    if (data) {
       data.active = false;
       await data.save();
     }
     message.channel.send(embed.setDescription(`\`(${ban.user.username.replace(/\`/g, "")} - ${ban.user.id})\` adlı üyenin banı ${message.author} tarafından kaldırıldı!`));
-    
+    if (conf.dmMessages) ban.user.send(`**${message.guild.name}** sunucusunda, **${message.author.tag}** tarafından banınız kaldırıldı!`).catch(() => {});
+
     const log = new MessageEmbed()
       .setAuthor(ban.user.username, ban.user.avatarURL({ dynamic: true, size: 2048 }))
       .setColor("GREEN")

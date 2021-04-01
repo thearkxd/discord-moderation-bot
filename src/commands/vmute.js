@@ -31,10 +31,14 @@ module.exports = {
     if (conf.penals.voiceMute.limit > 0 && vmuteLimit.has(message.author.id) && vmuteLimit.get(message.author.id) == conf.penals.voiceMute.limit) return message.channel.error(message, "Saatlik susturma sınırına ulaştın!");
 
     member.roles.add(conf.penals.voiceMute.roles);
-    if (member.voice.channelID && !member.voice.serverMute) member.voice.setMute(true);
+    if (member.voice.channelID && !member.voice.serverMute) {
+      member.voice.setMute(true);
+      member.roles.add(conf.penals.voiceMute.roles);
+    }
     const penal = await client.penalize(message.guild.id, member.user.id, "VOICE-MUTE", true, message.author.id, reason, true, Date.now() + duration);
     message.channel.send(embed.setDescription(`${member.toString()} üyesi, ${message.author} tarafından, \`${reason}\` nedeniyle **sesli kanallarda** susturuldu! \`(Ceza ID: #${penal.id})\``));
-    
+    if (conf.dmMessages) member.send(`**${message.guild.name}** sunucusunda, **${message.author.tag}** tarafından, **${reason}** sebebiyle **sesli kanallarda** susturuldunuz!`).catch(() => {});
+
     const time = ms(duration).replace("h", " saat").replace("m", " dakika").replace("s", " saniye");
     const log = new MessageEmbed()
       .setAuthor(member.user.username, member.user.avatarURL({ dynamic: true, size: 2048 }))

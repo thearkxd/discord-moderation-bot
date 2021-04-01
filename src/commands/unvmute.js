@@ -27,14 +27,15 @@ module.exports = {
 
     member.roles.remove(conf.penals.voiceMute.roles);
     if (member.voice.channelID && member.voice.serverMute) member.voice.setMute(false);
-    const data = await penals.findOne({ userID: member.user.id, guildID: message.guild.id, type: "VOICE-MUTE" });
-    if (data && data.active) {
+    const data = await penals.findOne({ userID: member.user.id, guildID: message.guild.id, type: "VOICE-MUTE", active: true });
+    if (data) {
       data.active = false;
       data.removed = true;
       await data.save();
     }
     message.channel.send(embed.setDescription(`${member.toString()} üyesinin **sesli kanallarda** susturması, ${message.author} tarafından kaldırıldı!`));
-    
+    if (conf.dmMessages) member.send(`**${message.guild.name}** sunucusunda, **${message.author.tag}** tarafından **sesli kanallarda** olan susturmanız kaldırıldı!`).catch(() => {});
+
     const log = new MessageEmbed()
       .setAuthor(member.user.username, member.user.avatarURL({ dynamic: true, size: 2048 }))
       .setColor("GREEN")

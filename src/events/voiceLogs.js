@@ -2,6 +2,7 @@ const conf = require("../configs/config.json");
 
 module.exports = async (oldState, newState) => {
 const channel = newState.guild.channels.cache.get(conf.logs.voiceLog);
+if (!channel) return;
 if (!oldState.channel && newState.channel) return channel.send(`${newState.member.displayName} üyesi \`${newState.channel.name}\` adlı sesli kanala girdi!`);
 if (oldState.channel && !newState.channel) return channel.send(`${newState.member.displayName} üyesi \`${oldState.channel.name}\` adlı sesli kanaldan ayrıldı!`);
 if (oldState.channel.id && newState.channel.id && oldState.channel.id != newState.channel.id) return channel.send(`${newState.member.displayName} üyesi ses kanalını değiştirdi! (\`${oldState.channel.name}\` => \`${newState.channel.name}\`)`);

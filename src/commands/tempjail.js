@@ -33,8 +33,9 @@ module.exports = {
     member.setRoles(conf.penals.jail.roles);
     const penal = await client.penalize(message.guild.id, member.user.id, "TEMP-JAIL", true, message.author.id, reason, true, Date.now() + duration);
     message.channel.send(embed.setDescription(`${member.toString()} üyesi, ${message.author} tarafından, \`${reason}\` nedeniyle jaillendi! \`(Ceza ID: #${penal.id})\``));
-    
     const time = ms(duration).replace("h", " saat").replace("m", " dakika").replace("s", " saniye");
+    if (conf.dmMessages) member.send(`**${message.guild.name}** sunucusunda, **${message.author.tag}** tarafından, **${reason}** sebebiyle, **${time}** boyunca jaillendiniz!`).catch(() => {});
+    
     const log = new MessageEmbed()
       .setAuthor(member.user.username, member.user.avatarURL({ dynamic: true, size: 2048 }))
       .setColor("RED")
