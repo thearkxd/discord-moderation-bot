@@ -22,8 +22,7 @@ module.exports = {
     const question = await message.channel.send(member.toString(), { embed: embed.setDescription(`${member}, ${message.author} \`${member.voice.channel.name}\` odasına gelmek istiyor. Kabul ediyor musun?`) });
     await question.react(emojis.mark);
     await question.react(emojis.cross);
-    const filter = (reaction, user) => [emojis.mark, emojis.cross].includes(reaction.emoji.name) && user.id === member.user.id;
-    const answer = await question.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] }).catch(() => question.edit(embed.setDescription("İşlem iptal edildi!")));
+    const answer = await question.awaitReactions((reaction, user) => [emojis.mark, emojis.cross].includes(reaction.emoji.toString()) && user.id === member.user.id, { max: 1, time: 60000, errors: ["time"] }).catch(() => { question.edit(embed.setDescription("İşlem iptal edildi!")) });
     if (answer.first().emoji.toString() === emojis.mark) {
       embed.setColor("GREEN");
       question.edit(embed.setDescription(`${member}, <@${message.author.id}> isteğini kabul etti`));
