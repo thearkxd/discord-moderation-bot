@@ -21,9 +21,8 @@ module.exports = {
     if (!message.member.hasPermission(8) && !conf.penals.warn.staffs.some(x => message.member.roles.cache.has(x))) return message.channel.error(message, "Yeterli yetkin bulunmuyor!");
     const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
     if (!member) return message.channel.error(message, "Bir üye belirtmelisin!");
-    const reason = args.slice(2).join(" ") || "Belirtilmedi!";
-    if (!message.member.hasPermission(8) && member.roles.highest.position >= message.member.roles.highest.position) return message.channel.error(message, "Kendinle aynı yetkide ya da daha yetkili olan birini susturamazsın!");
-    if (!member.manageable) return message.channel.error(message, "Bu üyeyi susturamıyorum!");
+    const reason = args.slice(1).join(" ") || "Belirtilmedi!";
+    if (!message.member.hasPermission(8) && member.roles.highest.position >= message.member.roles.highest.position) return message.channel.error(message, "Kendinle aynı yetkide ya da daha yetkili olan birini uyaramazsın!");
 
     const penal = await client.penalize(message.guild.id, member.user.id, "WARN", false, message.author.id, reason);
     const data = await penals.find({ guildID: message.guild.id, userID: member.user.id, type: "WARN" });
